@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://cmmkha7860gkv"]
+
+[ext_resource type="Texture2D" uid="uid://dk0ujl2q14ldy" path="res://assets/sprites/background/main_bg.png" id="1_ljpgv"]
+[ext_resource type="Texture2D" uid="uid://cels88a7qduw3" path="res://assets/sprites/background/building_1.png" id="2_bpahb"]
+[ext_resource type="Texture2D" uid="uid://mlfw3ycw7i3e" path="res://assets/sprites/background/building_2.png" id="3_qs7dk"]
+[ext_resource type="Texture2D" uid="uid://0w65d64d0jff" path="res://assets/sprites/background/building_3.png" id="4_2oy3k"]
+
+[node name="ParallaxBackground" type="Node2D"]
+
+[node name="Main" type="Parallax2D" parent="."]
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Main"]
+texture = ExtResource("1_ljpgv")
+
+[node name="Buiding1" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.7, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Buiding1"]
+texture = ExtResource("2_bpahb")
+
+[node name="Buliding2" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.8, 1)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Buliding2"]
+texture = ExtResource("3_qs7dk")
+
+[node name="Building3" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.9, 1)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Building3"]
+texture = ExtResource("4_2oy3k")
