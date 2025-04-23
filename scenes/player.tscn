@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://b70xyfe1uvyq8"]
+[gd_scene load_steps=72 format=3 uid="uid://b70xyfe1uvyq8"]
 
 [ext_resource type="Texture2D" uid="uid://dpy7f13ymo84n" path="res://assets/sprites/character/player/Attack_1.png" id="1_qlg0r"]
 [ext_resource type="Script" uid="uid://dvdctwivffl46" path="res://scripts/player.gd" id="1_tuyoq"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://rpt86jta3ok3" path="res://assets/sprites/character/player/Run.png" id="4_smehm"]
 [ext_resource type="Texture2D" uid="uid://def2o3t5o5w44" path="res://assets/sprites/character/player/Hurt.png" id="4_ur7pv"]
 [ext_resource type="Texture2D" uid="uid://cq55rd0525l3e" path="res://assets/sprites/character/player/Walk.png" id="5_ur7pv"]
+[ext_resource type="PackedScene" uid="uid://c0yuf3ndkikn1" path="res://scenes/health_bar.tscn" id="9_ur7pv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
 atlas = ExtResource("1_qlg0r")
@@ -460,6 +461,9 @@ radius = 8.06226
 radius = 7.0
 height = 22.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ur7pv"]
+radius = 8.06226
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_tuyoq")
 
@@ -467,8 +471,9 @@ script = ExtResource("1_tuyoq")
 position = Vector2(4, -38)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_42b1b")
-animation = &"idle"
+animation = &"attack"
 autoplay = "idle"
+frame = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, -8)
@@ -488,5 +493,29 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
 shape = SubResource("CapsuleShape2D_smehm")
+
+[node name="AttackArea" type="Area2D" parent="."]
+position = Vector2(16, -29)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_ur7pv")
+disabled = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HealthBar" parent="CanvasLayer" instance=ExtResource("9_ur7pv")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -261.0
+offset_top = -49.0
+offset_right = 260.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
 
 [connection signal="area_entered" from="HitArea" to="." method="_on_hit_area_area_entered"]

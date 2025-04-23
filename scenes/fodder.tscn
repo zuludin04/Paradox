@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://xihxyu5k0vdx"]
+[gd_scene load_steps=47 format=3 uid="uid://xihxyu5k0vdx"]
 
 [ext_resource type="Script" uid="uid://cctm7eoijhvh0" path="res://scripts/fodder.gd" id="1_a5e2l"]
 [ext_resource type="Texture2D" uid="uid://b82rfb8trco58" path="res://assets/sprites/character/fodder/Attack_1.png" id="1_vwpwf"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://db56meflljdlh" path="res://assets/sprites/character/fodder/Shot.png" id="4_dmo1q"]
 [ext_resource type="Texture2D" uid="uid://c6kolat5c0it2" path="res://assets/sprites/character/fodder/Walk.png" id="5_fe8pr"]
 [ext_resource type="Texture2D" uid="uid://ck4auenobj80a" path="res://assets/sprites/character/fodder/Idle.png" id="6_dmo1q"]
+[ext_resource type="PackedScene" uid="uid://c0yuf3ndkikn1" path="res://scenes/health_bar.tscn" id="9_fe8pr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ikbiw"]
 atlas = ExtResource("1_vwpwf")
@@ -274,10 +275,12 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vwpwf"]
-radius = 12.6491
+radius = 10.0499
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vwpwf"]
 size = Vector2(307, 42)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dmo1q"]
 
 [node name="Fodder" type="CharacterBody2D"]
 script = ExtResource("1_a5e2l")
@@ -289,26 +292,38 @@ scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_11ms8")
 animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.287276
 flip_h = true
 
 [node name="WorldCollision" type="CollisionShape2D" parent="."]
-position = Vector2(0, -14)
+position = Vector2(0, -11)
 shape = SubResource("CircleShape2D_vwpwf")
 
 [node name="ShootingArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShootingArea"]
-position = Vector2(-70, -21)
+position = Vector2(0, -21)
 shape = SubResource("RectangleShape2D_vwpwf")
 
 [node name="BulletSpawn" type="Marker2D" parent="."]
-position = Vector2(-10, -24)
+position = Vector2(-14, -24)
 
 [node name="ShootingTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="HitArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
+position = Vector2(0, -31)
+shape = SubResource("CircleShape2D_dmo1q")
+
+[node name="HealthBar" parent="." instance=ExtResource("9_fe8pr")]
+offset_left = -11.0
+offset_top = -52.0
+offset_right = 12.0
+offset_bottom = -45.0
 
 [connection signal="area_exited" from="ShootingArea" to="." method="_on_shooting_area_area_exited"]
 [connection signal="body_entered" from="ShootingArea" to="." method="_on_shooting_area_body_entered"]
 [connection signal="body_exited" from="ShootingArea" to="." method="_on_shooting_area_body_exited"]
 [connection signal="timeout" from="ShootingTimer" to="." method="_on_shooting_timer_timeout"]
+[connection signal="area_entered" from="HitArea" to="." method="_on_hit_area_area_entered"]
